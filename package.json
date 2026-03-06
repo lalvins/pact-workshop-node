@@ -1,0 +1,15 @@
+{
+  "name": "pact-workshop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Consumer-driven contract testing workshop using Pact",
+  "packageManager": "pnpm@10.30.3",
+  "scripts": {
+    "start": "concurrently \"pnpm run start:provider\" \"pnpm run start:consumer\"",
+    "start:provider": "pnpm --filter product-provider-service start",
+    "start:consumer": "pnpm --filter product-consumer-service start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
