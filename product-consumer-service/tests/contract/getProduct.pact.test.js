@@ -18,7 +18,6 @@ describe('Product Consumer Contract', () => {
       .given('product with id "1" exists')
       .uponReceiving('a request to get product with id 1')
       .withRequest({
-        headers: { Accept: 'application/json' },
         method: 'GET',
         path: '/products/1',
       })
