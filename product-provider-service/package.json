@@ -1,0 +1,18 @@
+{
+  "name": "product-provider-service",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/api/server.js",
+    "start:pact": "USE_IN_MEMORY_DB=true node src/api/server.js",
+    "test:contract": "vitest run tests/contract"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@pact-foundation/pact": "^12.1.0",
+    "vitest": "^1.3.1"
+  }
+}
