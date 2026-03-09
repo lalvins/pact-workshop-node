@@ -4,7 +4,6 @@ Please complete **all steps in this document before the workshop starts**. The s
 
 If you hit a blocker, reach out in the workshop Slack channel (or by e-mail) at least one day before.
 
----
 
 ## What You Will Learn
 
@@ -22,7 +21,6 @@ You will learn how to:
 
 The codebase follows a hexagonal architecture (ports & adapters), which keeps the domain logic decoupled from HTTP and database concerns — this makes the Pact integration clean and straightforward.
 
----
 
 ## Prerequisites
 
@@ -75,7 +73,6 @@ Alternatively, download the installer directly from [nodejs.org](https://nodejs.
 - **ESLint** (`dbaeumer.vscode-eslint`)
 - **REST Client** (`humao.rest-client`) — useful for manually probing the running APIs
 
----
 
 ## Getting the Repository
 
@@ -86,7 +83,6 @@ cd pact-workshop
 
 > The repository URL will be shared by the facilitator before the workshop.
 
----
 
 ## Installing Dependencies
 
@@ -99,7 +95,6 @@ npm install --prefix product-provider-service
 
 Verify both completed without errors (warnings about deprecated packages are normal and can be ignored).
 
----
 
 ## Verify the Setup
 
@@ -183,7 +178,6 @@ curl http://localhost:3000/products/1
 
 Stop both servers with `Ctrl+C`.
 
----
 
 ## Project Structure Reference
 
@@ -217,7 +211,6 @@ pact-workshop/
         └── provider.pact.test.js  # Provider verification test
 ```
 
----
 
 ## Key Concepts to Read Before the Workshop
 
@@ -232,7 +225,6 @@ https://docs.pact.io/getting_started/how_pact_works
 **3. Provider states — how the provider sets up test data**
 https://docs.pact.io/getting_started/provider_states
 
----
 
 ## How the Pact Flow Works (the big picture)
 
@@ -252,7 +244,6 @@ https://docs.pact.io/getting_started/provider_states
 
 The pact file is the shared artefact. The consumer owns it — it describes what the consumer needs. The provider must prove it can satisfy those needs.
 
----
 
 ## Environment Variables (advanced — broker mode)
 
@@ -269,7 +260,6 @@ The workshop uses **local pact files** by default. No environment variables are 
 | `GIT_BRANCH` | Provider branch (affects consumer selectors) | `local` |
 | `VERBOSE` | Set to `true` for debug-level pact logs | `false` |
 
----
 
 ## Quick-Reference: All Commands
 
@@ -283,7 +273,6 @@ The workshop uses **local pact files** by default. No environment variables are 
 | Start provider (SQLite, production) | `npm start --prefix product-provider-service` |
 | Start consumer | `npm start --prefix product-consumer-service` |
 
----
 
 ## Troubleshooting
 
@@ -318,6 +307,5 @@ Run:
 npm install --prefix product-provider-service --target_arch=arm64
 ```
 
----
 
 *See you at the workshop!*
