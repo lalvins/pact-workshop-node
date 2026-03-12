@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node src/api/server.js",
     "start:pact": "USE_IN_MEMORY_DB=true node src/api/server.js",
-    "test:contract": "vitest run tests/contract"
+    "test:provider-verification": "vitest run tests/contract"
   },
   "dependencies": {
     "better-sqlite3": "^9.4.3",

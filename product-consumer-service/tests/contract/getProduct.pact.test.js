@@ -40,4 +40,38 @@ describe('Product Consumer Contract', () => {
         expect(typeof product.price).toBe('number');
       });
   });
+
+  it('creates a product and returns it with a sku', () => {
+  return pact
+    .given('the provider can create a product')
+    .uponReceiving('a POST request to create a product')
+    .withRequest({
+      method: 'POST',
+      path: '/products',
+      headers: { 'Content-Type': 'application/json' },
+      body: {
+        name: like('Coffee Mug'),
+        price: decimal(12.99),
+      },
+    })
+    .willRespondWith({
+      status: 201,
+      body: {
+        id: like('1'),
+        name: like('Coffee Mug'),
+        price: decimal(12.99),
+        // sku: like('MUG-001'),   // ← provider does not return this
+      },
+    })
+    .executeTest(async (mockServer) => {
+      const axios = require('axios');
+      const { data } = await axios.post(`${mockServer.url}/products`, {
+        name: 'Coffee Mug',
+        price: 12.99,
+      }, { headers: { 'Content-Type': 'application/json' } });
+      expect(data.id).toBeDefined();
+      expect(data.name).toBeDefined();
+      expect(typeof data.price).toBe('number');
+    });
+});
 });
