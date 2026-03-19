@@ -78,7 +78,7 @@ Alternatively, download the installer directly from [nodejs.org](https://nodejs.
 
 ```bash
 git clone <repository-url>
-cd pact-workshop
+cd pact-workshop-node
 ```
 
 > The repository URL will be shared by the facilitator before the workshop.
