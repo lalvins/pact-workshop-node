@@ -129,7 +129,7 @@ Open it — it is a human-readable JSON document describing the contract between
 This starts the provider with an in-memory database, then verifies it against the pact file generated in Check 1:
 
 ```bash
-npm run test:contract --prefix product-provider-service
+npm run test:provider-verification --prefix product-provider-service
 ```
 
 Expected output (abbreviated):
@@ -146,6 +146,10 @@ Verifying a pact between product-consumer-service and product-provider-service
 
 ✓ tests/contract/provider.pact.test.js (1 test)
 ```
+
+### Good news!!!
+If you reached this point without issues, you are ready for the workshop!!!
+
 
 ### Check 3 — Provider service starts
 
@@ -210,55 +214,6 @@ pact-workshop/
         ├── providerStates.js   # Provider state handlers + /_pact/provider_states endpoint
         └── provider.pact.test.js  # Provider verification test
 ```
-
-
-## Key Concepts to Read Before the Workshop
-
-You do not need to be an expert — reading these takes about 20 minutes and will make the exercises much clearer.
-
-**1. What is contract testing and why does it exist?**
-https://docs.pact.io/getting_started/what_is_contract_testing
-
-**2. Consumer-driven contracts — the core idea**
-https://docs.pact.io/getting_started/how_pact_works
-
-**3. Provider states — how the provider sets up test data**
-https://docs.pact.io/getting_started/provider_states
-
-
-## How the Pact Flow Works (the big picture)
-
-```
-┌─────────────────────────────┐        ┌──────────────────────────────────┐
-│   product-consumer-service  │        │   product-provider-service       │
-│                             │        │                                  │
-│  Consumer Pact test         │        │  Provider verification test      │
-│  ─────────────────          │  pact  │  ──────────────────────────────  │
-│  1. Define interaction      │ ──────►│  3. Read pact file               │
-│  2. Run against mock server │  file  │  4. Start real Express app       │
-│     → generates pact file   │        │  5. Call provider states endpoint│
-│                             │        │  6. Replay each interaction      │
-│                             │        │  7. Assert responses match       │
-└─────────────────────────────┘        └──────────────────────────────────┘
-```
-
-The pact file is the shared artefact. The consumer owns it — it describes what the consumer needs. The provider must prove it can satisfy those needs.
-
-
-## Environment Variables (advanced — broker mode)
-
-The workshop uses **local pact files** by default. No environment variables are needed for the exercises. The table below documents the variables supported by the provider verification for future reference (CI/broker integration).
-
-| Variable | Purpose | Default |
-|---|---|---|
-| `PACT_URL` | Verify a specific remote pact file URL | — |
-| `PACT_BROKER_BASE_URL` | Fetch pacts dynamically from a Pact Broker | — |
-| `PACT_BROKER_TOKEN` | Bearer token for broker authentication | — |
-| `PACT_BROKER_USERNAME` | Basic auth username for broker | — |
-| `PACT_BROKER_PASSWORD` | Basic auth password for broker | — |
-| `GIT_COMMIT` | Provider version tag published to broker | `local-dev` |
-| `GIT_BRANCH` | Provider branch (affects consumer selectors) | `local` |
-| `VERBOSE` | Set to `true` for debug-level pact logs | `false` |
 
 
 ## Quick-Reference: All Commands
