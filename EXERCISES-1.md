@@ -365,7 +365,8 @@ npm run test:contract --prefix product-provider-service
 1) Verifying a pact between product-consumer-service and product-provider-service
      a request to get product with id 1
        Body had differences:
-         $.name -> Expected 'Coffee Mug' (like) but was missing
+         1.1) has a matching body
+           $ -> Actual map is missing the following keys: name
 ```
 
 **Fix**
