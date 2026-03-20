@@ -57,11 +57,19 @@ npm run test:contract --prefix product-consumer-service
 **Expected output (failure)**
 
 ```
-FAIL  tests/contract/getProduct.pact.test.js
-  × returns a product from the provider
+[10:37:44.198] ERROR (43317): pact@12.5.2: Test failed for the following reasons:
 
-Request was not matched: GET /product/1
-No interaction found for GET /product/1
+  Mock server failed with the following mismatches:
+
+        0) The following request was not expected: 
+            Method: GET
+            Path: /product/1
+            Headers:
+              accept: application/json, text/plain, */*
+              accept-encoding: gzip, compress, deflate, br
+              connection: keep-alive
+              host: 127.0.0.1:63018
+              user-agent: axios/1.13.6
 ```
 
 The mock expected `GET /products/1` — what the interaction defined. The adapter
@@ -81,9 +89,69 @@ npm run test:contract --prefix product-consumer-service   # back to green
 
 ---
 
-### C3 — Add a POST expectation the provider cannot satisfy
+### C3 — Consumer drops a field it promised to send
 
-Add a consumer test for `POST /products` that expects a `sku` field in the response.
+The consumer test declares it will POST `{ name, price }`. Remove `name` from the
+payload passed in `executeTest` and watch the mock reject the request.
+
+**Step 1 — Introduce the bug**
+
+In `product-consumer-service/tests/contract/getProduct.pact.test.js`:
+
+```js
+// BEFORE
+const product = await useCase.execute({ name: 'Coffee Mug', price: 12.99 });
+```
+
+```js
+// AFTER (breaking — name omitted from the actual request)
+const product = await useCase.execute({ price: 12.99 });
+```
+
+**Step 2 — Run**
+
+```bash
+npm run test:contract --prefix product-consumer-service
+```
+
+**Expected output (failure)**
+
+```
+ERROR: pact@12.5.2: Test failed for the following reasons:
+
+  Mock server failed with the following mismatches:
+
+        0) The following request was incorrect:
+
+                POST /products
+
+                 1.0   $: Expected a Map with keys [name, price] but received one with keys [price]
+
+
+Vitest caught 1 unhandled error during the test run.
+```
+
+The interaction declared the consumer will send `{ name, price }`. The actual
+request only sent `{ price }`. Pact catches the missing key and reports it as an
+unhandled error — the pact file is not updated.
+
+**Step 3 — Fix**
+
+Restore `name` in the `executeTest` call:
+
+```js
+const product = await useCase.execute({ name: 'Coffee Mug', price: 12.99 });
+```
+
+```bash
+npm run test:contract --prefix product-consumer-service   # back to green
+```
+
+---
+
+### C4 — Add a POST expectation the provider cannot satisfy
+
+Modify the consumer test for `POST /products` and make it expects a `sku` field in the response.
 The provider does not return `sku`. The consumer test will pass (the mock serves
 whatever we define), but provider verification will fail.
 
@@ -144,9 +212,9 @@ because we told it to — but the real provider has no idea about this field yet
 
 ## Provider Exercises
 
-### P1 — Run exercise C3 against the provider
+### P1 — Run exercise C4 against the provider
 
-The pact file contains the `sku` expectation from C3. Run provider verification to
+The pact file contains the `sku` expectation from C4. Run provider verification to
 see it fail.
 
 ```bash
@@ -333,7 +401,8 @@ npm run test:contract --prefix product-provider-service   # back to green
 |---|---|
 | C1 | `npm run test:contract --prefix product-consumer-service` |
 | C2 | `npm run test:contract --prefix product-consumer-service` |
-| C3 | `npm run test:contract --prefix product-consumer-service` then `--prefix product-provider-service` |
+| C3 | `npm run test:contract --prefix product-consumer-service` |
+| C4 | `npm run test:contract --prefix product-consumer-service` then `--prefix product-provider-service` |
 | P1 | `npm run test:contract --prefix product-provider-service` |
 | P2 | `npm run test:contract --prefix product-provider-service` |
 | P3 | `npm run test:contract --prefix product-provider-service` |
