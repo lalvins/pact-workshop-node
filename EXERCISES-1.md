@@ -15,11 +15,17 @@ npm run test:contract --prefix product-consumer-service
 **Expected output (green)**
 
 ```
-✓ tests/contract/getProduct.pact.test.js (1 test)
+✓ tests/contract/getProduct.pact.test.js (2)
+   ✓ Product Consumer Contract (2)
+     ✓ returns a product from the provider
+     ✓ creates a product and returns it with a sku
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
 ```
 
 The pact file at `pacts/product-consumer-service-product-provider-service.json` is
-generated with one interaction.
+generated with two interactions.
 
 ---
 
