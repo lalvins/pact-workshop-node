@@ -155,24 +155,15 @@ Modify the consumer test for `POST /products` and make it expects a `sku` field 
 The provider does not return `sku`. The consumer test will pass (the mock serves
 whatever we define), but provider verification will fail.
 
-**Step 1 — Add the test**
+**Step 1 — Modify the existing test**
 
 Add a second `it` block to `product-consumer-service/tests/contract/getProduct.pact.test.js`:
 
 ```js
 it('creates a product and returns it with a sku', () => {
-  return pact
-    .given('the provider can create a product')
-    .uponReceiving('a POST request to create a product')
-    .withRequest({
-      method: 'POST',
-      path: '/products',
-      headers: { 'Content-Type': 'application/json' },
-      body: {
-        name: like('Coffee Mug'),
-        price: decimal(12.99),
-      },
-    })
+    .
+    .
+    .
     .willRespondWith({
       status: 201,
       body: {
@@ -182,14 +173,9 @@ it('creates a product and returns it with a sku', () => {
         sku: like('MUG-001'),   // ← provider does not return this
       },
     })
-    .executeTest(async (mockServer) => {
-      const axios = require('axios');
-      const { data } = await axios.post(`${mockServer.url}/products`, {
-        name: 'Coffee Mug',
-        price: 12.99,
-      });
-      expect(data.sku).toBeDefined();
-    });
+    .
+    .
+    .
 });
 ```
 
@@ -210,9 +196,7 @@ because we told it to — but the real provider has no idea about this field yet
 
 ---
 
-## Provider Exercises
-
-### P1 — Run exercise C4 against the provider
+### Step 3 - Run exercise C4 against the provider
 
 The pact file contains the `sku` expectation from C4. Run provider verification to
 see it fail.
@@ -257,8 +241,9 @@ npm run test:contract --prefix product-provider-service   # back to green
 ```
 
 ---
+## Provider Exercises
 
-### P2 — Breaking change: wrong status code on POST
+### P1 — Breaking change: wrong status code on POST
 
 Change the `POST /products` handler to return `204` instead of `201`.
 
@@ -304,7 +289,7 @@ npm run test:contract --prefix product-provider-service   # back to green
 
 ---
 
-### P3 — Breaking change: wrong field type
+### P2 — Breaking change: wrong field type
 
 Change `price` to be returned as a string instead of a number.
 
@@ -350,7 +335,7 @@ npm run test:contract --prefix product-provider-service   # back to green
 
 ---
 
-### P4 — Breaking change: renamed field
+### P3 — Breaking change: renamed field
 
 Rename `name` to `product_name` in the `GET /products/:id` response.
 
