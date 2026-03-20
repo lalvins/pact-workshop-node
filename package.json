@@ -7,7 +7,9 @@
   "scripts": {
     "start": "concurrently \"pnpm run start:provider\" \"pnpm run start:consumer\"",
     "start:provider": "pnpm --filter product-provider-service start",
-    "start:consumer": "pnpm --filter product-consumer-service start"
+    "start:consumer": "pnpm --filter product-consumer-service start",
+    "test:contract": "pnpm --filter product-consumer-service test:contract",
+    "test:provider-verification": "pnpm --filter product-provider-service test:provider-verification"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
