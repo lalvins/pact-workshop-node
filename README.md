@@ -178,6 +178,7 @@ With the provider also running (in another terminal), test the consumer:
 
 ```bash
 curl http://localhost:3000/products/1
+# {"id":"1","name":"Coffee Mug","price":12.99}
 ```
 
 Stop both servers with `Ctrl+C`.

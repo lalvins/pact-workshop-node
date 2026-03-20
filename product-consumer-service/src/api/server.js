@@ -8,7 +8,7 @@ const getProductUseCase = new GetProductUseCase(adapter);
 const app = express();
 app.use(express.json());
 
-app.get('/product/:id', async (req, res) => {
+app.get('/products/:id', async (req, res) => {
   try {
     const product = await getProductUseCase.execute(req.params.id);
     res.json(product);
