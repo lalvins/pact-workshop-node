@@ -2,6 +2,7 @@ const { PactV3, MatchersV3 } = require('@pact-foundation/pact');
 const path = require('path');
 const { ProductServiceHttpAdapter } = require('../../src/adapters/ProductServiceHttpAdapter');
 const GetProductUseCase = require('../../src/application/GetProductUseCase');
+const CreateProductUseCase = require('../../src/application/CreateProductUseCase');
 
 const { like, decimal } = MatchersV3;
 
@@ -64,14 +65,14 @@ describe('Product Consumer Contract', () => {
       },
     })
     .executeTest(async (mockServer) => {
-      const axios = require('axios');
-      const { data } = await axios.post(`${mockServer.url}/products`, {
-        name: 'Coffee Mug',
-        price: 12.99,
-      }, { headers: { 'Content-Type': 'application/json' } });
-      expect(data.id).toBeDefined();
-      expect(data.name).toBeDefined();
-      expect(typeof data.price).toBe('number');
+      const adapter = new ProductServiceHttpAdapter(mockServer.url);
+      const useCase = new CreateProductUseCase(adapter);
+
+      const product = await useCase.execute({ name: 'Coffee Mug', price: 12.99 });
+
+      expect(product.id).toBeDefined();
+      expect(product.name).toBeDefined();
+      expect(typeof product.price).toBe('number');
     });
 });
 });
