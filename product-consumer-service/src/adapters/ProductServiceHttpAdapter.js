@@ -26,6 +26,17 @@ class ProductServiceHttpAdapter extends ProductServicePort {
       throw err;
     }
   }
+
+  async createProduct(productData) {
+    try {
+      const { data } = await axios.post(`${this.baseUrl}/products`, productData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      return new Product(data);
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = { ProductServiceHttpAdapter, ProductNotFoundError };
