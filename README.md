@@ -224,7 +224,7 @@ pact-workshop/
 | Install consumer deps | `npm install --prefix product-consumer-service` |
 | Install provider deps | `npm install --prefix product-provider-service` |
 | Run consumer contract test | `npm run test:contract --prefix product-consumer-service` |
-| Run provider contract verification | `npm run test:contract --prefix product-provider-service` |
+| Run provider contract verification | `npm run test:provider-verification --prefix product-provider-service` |
 | Start provider (InMemory, for pact) | `npm run start:pact --prefix product-provider-service` |
 | Start provider (SQLite, production) | `npm start --prefix product-provider-service` |
 | Start consumer | `npm start --prefix product-consumer-service` |
