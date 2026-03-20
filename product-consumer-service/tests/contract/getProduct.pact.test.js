@@ -4,7 +4,7 @@ const { ProductServiceHttpAdapter } = require('../../src/adapters/ProductService
 const GetProductUseCase = require('../../src/application/GetProductUseCase');
 const CreateProductUseCase = require('../../src/application/CreateProductUseCase');
 
-const { like, decimal } = MatchersV3;
+const { like } = MatchersV3;
 
 const pact = new PactV3({
   consumer: 'product-consumer-service',
@@ -27,7 +27,7 @@ describe('Product Consumer Contract', () => {
         body: {
           id: like('1'),
           name: like('Coffee Mug'),
-          price: decimal(12.99),
+          price: like(12.99),
         },
       })
       .executeTest(async (mockServer) => {
@@ -52,7 +52,7 @@ describe('Product Consumer Contract', () => {
       headers: { 'Content-Type': 'application/json' },
       body: {
         name: like('Coffee Mug'),
-        price: decimal(12.99),
+        price: like(12.99),
       },
     })
     .willRespondWith({
@@ -60,7 +60,7 @@ describe('Product Consumer Contract', () => {
       body: {
         id: like('1'),
         name: like('Coffee Mug'),
-        price: decimal(12.99),
+        price: like(12.99),
         // sku: like('MUG-001'),   // ← provider does not return this
       },
     })
