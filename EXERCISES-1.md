@@ -202,7 +202,7 @@ The pact file contains the `sku` expectation from C4. Run provider verification 
 see it fail.
 
 ```bash
-npm run test:contract --prefix product-provider-service
+npm run test:provider-verification --prefix product-provider-service
 ```
 
 **Expected output (failure)**
@@ -237,7 +237,7 @@ then regenerate the pact:
 
 ```bash
 npm run test:contract --prefix product-consumer-service   # regenerate pact
-npm run test:contract --prefix product-provider-service   # back to green
+npm run test:provider-verification --prefix product-provider-service   # back to green
 ```
 
 ---
@@ -264,7 +264,7 @@ res.status(204).json(product);
 **Step 2 — Run provider verification**
 
 ```bash
-npm run test:contract --prefix product-provider-service
+npm run test:provider-verification --prefix product-provider-service
 ```
 
 **Expected output (failure)**
@@ -311,7 +311,7 @@ res.json({ ...product, price: String(product.price) });
 **Step 2 — Run provider verification**
 
 ```bash
-npm run test:contract --prefix product-provider-service
+npm run test:provider-verification --prefix product-provider-service
 ```
 
 **Expected output (failure)**
@@ -356,7 +356,7 @@ res.json({ id: product.id, product_name: product.name, price: product.price });
 **Step 2 — Run provider verification**
 
 ```bash
-npm run test:contract --prefix product-provider-service
+npm run test:provider-verification --prefix product-provider-service
 ```
 
 **Expected output (failure)**
@@ -376,7 +376,7 @@ res.json(product);
 ```
 
 ```bash
-npm run test:contract --prefix product-provider-service   # back to green
+npm run test:provider-verification --prefix product-provider-service  # back to green
 ```
 
 ---
@@ -389,7 +389,7 @@ npm run test:contract --prefix product-provider-service   # back to green
 | C2 | `npm run test:contract --prefix product-consumer-service` |
 | C3 | `npm run test:contract --prefix product-consumer-service` |
 | C4 | `npm run test:contract --prefix product-consumer-service` then `--prefix product-provider-service` |
-| P1 | `npm run test:contract --prefix product-provider-service` |
-| P2 | `npm run test:contract --prefix product-provider-service` |
-| P3 | `npm run test:contract --prefix product-provider-service` |
-| P4 | `npm run test:contract --prefix product-provider-service` |
+| P1 | `npm run test:provider-verification --prefix product-provider-service` |
+| P2 | `npm run test:provider-verification --prefix product-provider-service` |
+| P3 | `npm run test:provider-verification --prefix product-provider-service` |
+| P4 | `npm run test:provider-verification --prefix product-provider-service` |
